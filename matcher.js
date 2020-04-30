@@ -55,39 +55,8 @@ const match = (payload, pattern) => {
     return result;
 }
 
-const scenario_7 = () => {
 
-    const payload = {
-        "type": "message",
-        "text": "invite (Omar) (o@o.o) (foo) (batata)",
-        "foo": { a: 1},
-    }
-
-    const result = match(payload, {
-        "type": "message",
-        "text": /invite \((?<name>\S+)\) \((?<email>\S+)\) \((?<company>\S+)\) \((?<role>\S+)\)/,
-        "foo": { a: 1},
-    }) 
-
-    return JSON.stringify({
-        match: true,
-        total: 2,
-        matches: {
-            "type": "message",
-            "text": "invite (Omar) (o@o.o) (foo) (batata)",
-            "foo": { a: 1},
-        },
-        groups: {
-            name: 'Omar',
-            email: 'o@o.o',
-            company: 'foo',
-            role: 'batata'
-        }
-    }) == JSON.stringify(result);
-
-}
-
-const scenario_6 = () => {
+const test_nested_objects_in_arrays = () => {
     const payload = {
         "type": "message",
         "text": "invite (Omar) (o@o.o) (foo) (batata)",
@@ -122,17 +91,35 @@ const scenario_6 = () => {
 
     return JSON.stringify({
         match: true,
-        name: 'Omar',
-        email: 'o@o.o',
-        company: 'foo',
-        role: 'batata',
-        name_other: 'ayman',
-        another: 'bassem',
-        who: "mafsoum"
+        total: 8,
+        matches: {
+            "type": "message",
+            "text": "invite (Omar) (o@o.o) (foo) (batata)",
+            "blocks": [
+                {
+                    "number": 1,
+                    "bool": true,
+                    "items": ['ping ayman', 'hi bassem', 'sup yo']
+                },{
+                    "number": 1,
+                    "bool": true,
+                    "some": "ping mafsoum"
+                }
+            ]
+        },
+        groups: {
+            name: 'Omar',
+            email: 'o@o.o',
+            company: 'foo',
+            role: 'batata',
+            name_other: 'ayman',
+            another: 'bassem',
+            who: "mafsoum"
+        }
     }) == JSON.stringify(result);
 }
 
-const scenario_5 = () => {
+const test_leaf_array_values_regex = () => {
     const payload = {
         "type": "message",
         "items": ['ping ayman', 'hi bassem', 'sup yo']
@@ -145,12 +132,19 @@ const scenario_5 = () => {
 
     return JSON.stringify({
         match: true,
-        name: 'ayman',
-        another: 'bassem'
+        total: 2,
+        matches: {
+            "type": "message",
+            "items": ['ping ayman', 'hi bassem', 'sup yo']
+        },
+        groups: {
+            name: 'ayman',
+            another: 'bassem'
+        }
     }) == JSON.stringify(result);
 }
 
-const scenario_4 = () => {
+const test_leaf_array_values_multi_type = () => {
     const payload = {
         "type": "message",
         "items": [true, 'hi', 2, 3]
@@ -162,11 +156,16 @@ const scenario_4 = () => {
     }) 
 
     return JSON.stringify({
-        match: true
+        match: true,
+        total: 2,
+        matches: {
+            "type": "message",
+            "items": [true, 'hi', 2, 3]
+        }
     }) == JSON.stringify(result);
 }
 
-const scenario_3 = () => {
+const test_leaf_array_values = () => {
     const payload = {
         "type": "message",
         "items": [0, 1, 2, 3]
@@ -178,11 +177,16 @@ const scenario_3 = () => {
     }) 
 
     return JSON.stringify({
-        match: true
+        match: true,
+        total: 2,
+        matches: {
+            "type": "message",
+            "items": [0, 1, 2, 3]
+        }
     }) == JSON.stringify(result);
 }
 
-const scenario_2 = () => {
+const test_nested_objects = () => {
     const payload = {
         "type": "message",
         "text": "invite (Omar) (o@o.o) (foo) (batata)",
@@ -217,12 +221,12 @@ const scenario_2 = () => {
         matches: {
             type: 'message',
             text: 'invite (Omar) (o@o.o) (foo) (batata)',
-            "blocka": {
+            blocka: {
                 "number": 1,
                 "bool": true,
                 "blockb": {
-                    "number": 1,
-                    "bool": true,
+                    "a": 1,
+                    "b": true,
                     "foo": "hug me"
                 }
             }
@@ -238,7 +242,7 @@ const scenario_2 = () => {
 }
 
 
-const scenario_1 = () => {
+const test_leaf_regex = () => {
 
     const payload = {
         "type": "message",
@@ -267,7 +271,7 @@ const scenario_1 = () => {
 
 }
 
-const scenario_0 = () => {
+const test_leaf_values = () => {
 
     const payload = {
         "type": "message",
@@ -302,13 +306,12 @@ const scenario_0 = () => {
 
 module.exports = {
     tests: {
-        scenario_0,
-        scenario_1,
-        scenario_2,
-//        scenario_3,
-//        scenario_4,
-//        scenario_5,
-//        scenario_6,
-        scenario_7,
+        test_leaf_values,
+        test_leaf_regex,
+        test_nested_objects,
+        test_leaf_array_values,
+        test_leaf_array_values_multi_type,
+        test_leaf_array_values_regex,
+        test_nested_objects_in_arrays,
     }
 }
