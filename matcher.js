@@ -55,135 +55,66 @@ const match = (payload, pattern) => {
     return result;
 }
 
+const test_leaf_values = () => {
 
-const test_nested_objects_in_arrays = () => {
+    const payload = {
+        "type": "message",
+        "text": "text",
+        "int": 1,
+        "bool": true,
+        "float": 1.1,
+    }
+
+    const result = match(payload, {
+        "type": "message",
+        "text": "text",
+        "int": 1,
+        "bool": true,
+        "float": 1.1,
+    }) 
+
+    return JSON.stringify({
+        match: true,
+        total: 5,
+        matches: {
+            "type": "message",
+            "text": "text",
+            "int": 1,
+            "bool": true,
+            "float": 1.1,
+        },
+        groups: {}
+    }) == JSON.stringify(result);
+
+}
+
+const test_leaf_regex = () => {
+
     const payload = {
         "type": "message",
         "text": "invite (Omar) (o@o.o) (foo) (batata)",
-        "blocks": [
-            {
-                "number": 1,
-                "bool": true,
-                "items": ['ping ayman', 'hi bassem', 'sup yo']
-            },{
-                "number": 1,
-                "bool": true,
-                "some": "ping mafsoum"
-            }
-        ]
     }
 
     const result = match(payload, {
         "type": "message",
         "text": /invite \((?<name>\S+)\) \((?<email>\S+)\) \((?<company>\S+)\) \((?<role>\S+)\)/,
-        "blocks": [
-            {
-                "number": 1,
-                "bool": true,
-                "items": [/ping (?<name_other>\S+)/, /hi (?<another>\S+)/, /sup yo/ ]
-            },{
-                "number": 1,
-                "bool": true,
-                "some": /ping (?<who>.*)/
-            }
-        ]
     }) 
 
     return JSON.stringify({
         match: true,
-        total: 8,
+        total: 2,
         matches: {
             "type": "message",
             "text": "invite (Omar) (o@o.o) (foo) (batata)",
-            "blocks": [
-                {
-                    "number": 1,
-                    "bool": true,
-                    "items": ['ping ayman', 'hi bassem', 'sup yo']
-                },{
-                    "number": 1,
-                    "bool": true,
-                    "some": "ping mafsoum"
-                }
-            ]
         },
         groups: {
             name: 'Omar',
             email: 'o@o.o',
             company: 'foo',
-            role: 'batata',
-            name_other: 'ayman',
-            another: 'bassem',
-            who: "mafsoum"
+            role: 'batata'
         }
     }) == JSON.stringify(result);
-}
 
-const test_leaf_array_values_regex = () => {
-    const payload = {
-        "type": "message",
-        "items": ['ping ayman', 'hi bassem', 'sup yo']
-    }
-
-    const result = match(payload, {
-        "type": "message",
-        "items": [/ping (?<name>\S+)/, /hi (?<another>\S+)/, /sup yo/ ]
-    }) 
-
-    return JSON.stringify({
-        match: true,
-        total: 2,
-        matches: {
-            "type": "message",
-            "items": ['ping ayman', 'hi bassem', 'sup yo']
-        },
-        groups: {
-            name: 'ayman',
-            another: 'bassem'
-        }
-    }) == JSON.stringify(result);
-}
-
-const test_leaf_array_values_multi_type = () => {
-    const payload = {
-        "type": "message",
-        "items": [true, 'hi', 2, 3]
-    }
-
-    const result = match(payload, {
-        "type": "message",
-        "items": [true, 'hi', 2, 3]
-    }) 
-
-    return JSON.stringify({
-        match: true,
-        total: 2,
-        matches: {
-            "type": "message",
-            "items": [true, 'hi', 2, 3]
-        }
-    }) == JSON.stringify(result);
-}
-
-const test_leaf_array_values = () => {
-    const payload = {
-        "type": "message",
-        "items": [0, 1, 2, 3]
-    }
-
-    const result = match(payload, {
-        "type": "message",
-        "items": [0, 1, 3]
-    }) 
-
-    return JSON.stringify({
-        match: true,
-        total: 2,
-        matches: {
-            "type": "message",
-            "items": [0, 1, 2, 3]
-        }
-    }) == JSON.stringify(result);
 }
 
 const test_nested_objects = () => {
@@ -241,17 +172,36 @@ const test_nested_objects = () => {
     }) == JSON.stringify(result);
 }
 
-
-const test_leaf_regex = () => {
-
+const test_leaf_array_values = () => {
     const payload = {
         "type": "message",
-        "text": "invite (Omar) (o@o.o) (foo) (batata)",
+        "items": [0, 1, 2, 3]
+    }    
+    
+    const result = match(payload, {
+        "type": "message",
+        "items": [0, 1, 3]
+    })     
+    
+    return JSON.stringify({
+        match: true,
+        total: 2,
+        matches: {
+            "type": "message",
+            "items": [0, 1, 2, 3]
+        }    
+    }) == JSON.stringify(result);    
+}
+
+const test_leaf_array_values_multi_type = () => {
+    const payload = {
+        "type": "message",
+        "items": [true, 'hi', 2, 3]
     }
 
     const result = match(payload, {
         "type": "message",
-        "text": /invite \((?<name>\S+)\) \((?<email>\S+)\) \((?<company>\S+)\) \((?<role>\S+)\)/,
+        "items": [true, 'hi', 2, 3]
     }) 
 
     return JSON.stringify({
@@ -259,49 +209,97 @@ const test_leaf_regex = () => {
         total: 2,
         matches: {
             "type": "message",
+            "items": [true, 'hi', 2, 3]
+        }
+    }) == JSON.stringify(result);
+}
+
+const test_leaf_array_values_regex = () => {
+    const payload = {
+        "type": "message",
+        "items": ['ping ayman', 'hi bassem', 'sup yo']
+    }    
+
+    const result = match(payload, {
+        "type": "message",
+        "items": [/ping (?<name>\S+)/, /hi (?<another>\S+)/, /sup yo/ ]
+    })     
+
+    return JSON.stringify({
+        match: true,
+        total: 2,
+        matches: {
+            "type": "message",
+            "items": ['ping ayman', 'hi bassem', 'sup yo']
+        },    
+        groups: {
+            name: 'ayman',
+            another: 'bassem'
+        }    
+    }) == JSON.stringify(result);    
+}
+
+const test_nested_objects_in_arrays = () => {
+    const payload = {
+        "type": "message",
+        "text": "invite (Omar) (o@o.o) (foo) (batata)",
+        "blocks": [
+            {
+                "number": 1,
+                "bool": true,
+                "items": ['ping ayman', 'hi bassem', 'sup yo']
+            },{
+                "number": 1,
+                "bool": true,
+                "some": "ping mafsoum"
+            }    
+        ]    
+    }    
+
+    const result = match(payload, {
+        "type": "message",
+        "text": /invite \((?<name>\S+)\) \((?<email>\S+)\) \((?<company>\S+)\) \((?<role>\S+)\)/,
+        "blocks": [
+            {
+                "number": 1,
+                "bool": true,
+                "items": [/ping (?<name_other>\S+)/, /hi (?<another>\S+)/, /sup yo/ ]
+            },{
+                "number": 1,
+                "bool": true,
+                "some": /ping (?<who>.*)/
+            }    
+        ]    
+    })     
+
+    return JSON.stringify({
+        match: true,
+        total: 8,
+        matches: {
+            "type": "message",
             "text": "invite (Omar) (o@o.o) (foo) (batata)",
-        },
+            "blocks": [
+                {
+                    "number": 1,
+                    "bool": true,
+                    "items": ['ping ayman', 'hi bassem', 'sup yo']
+                },{
+                    "number": 1,
+                    "bool": true,
+                    "some": "ping mafsoum"
+                }    
+            ]    
+        },    
         groups: {
             name: 'Omar',
             email: 'o@o.o',
             company: 'foo',
-            role: 'batata'
-        }
-    }) == JSON.stringify(result);
-
-}
-
-const test_leaf_values = () => {
-
-    const payload = {
-        "type": "message",
-        "text": "text",
-        "int": 1,
-        "bool": true,
-        "float": 1.1,
-    }
-
-    const result = match(payload, {
-        "type": "message",
-        "text": "text",
-        "int": 1,
-        "bool": true,
-        "float": 1.1,
-    }) 
-
-    return JSON.stringify({
-        match: true,
-        total: 5,
-        matches: {
-            "type": "message",
-            "text": "text",
-            "int": 1,
-            "bool": true,
-            "float": 1.1,
-        },
-        groups: {}
-    }) == JSON.stringify(result);
-
+            role: 'batata',
+            name_other: 'ayman',
+            another: 'bassem',
+            who: "mafsoum"
+        }    
+    }) == JSON.stringify(result);    
 }
 
 module.exports = {
