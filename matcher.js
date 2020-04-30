@@ -208,11 +208,12 @@ const test_leaf_array_values_multi_type = () => {
 
     return JSON.stringify({
         match: true,
-        total: 2,
+        total: 5,
         matches: {
             "type": "message",
             "items": [true, 'hi', 2, 3]
-        }
+        },
+        groups: {}
     }) == JSON.stringify(result);
 }
 
@@ -310,7 +311,7 @@ module.exports = {
         test_leaf_regex,
         test_nested_objects,
         test_leaf_array_values,
-        // test_leaf_array_values_multi_type,
+        test_leaf_array_values_multi_type,
         // test_leaf_array_values_regex,
         // test_nested_objects_in_arrays,
     }
