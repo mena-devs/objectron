@@ -7,7 +7,6 @@ const match = (payload, pattern) => {
         Object.entries(pattern).forEach(([key, value]) => {
             if(value instanceof RegExp){
                 const matcher = payload[key].match(value) || [];
-
                 if (matcher.length > 0) {
                     result.groups =  {...result.groups, ...matcher.groups};
                     current_node[key] = payload[key];
@@ -21,12 +20,15 @@ const match = (payload, pattern) => {
                     if(element instanceof RegExp){
                         const matcher = payload[key][index].match(element) || [];
                         if (matcher.length > 0) {
-                            result.groups = { ...result, ...matcher.groups};
+                            result.groups = { ...result.groups, ...matcher.groups};
+                            current_node[key] = payload[key];
+                            result.total += 1;
                         } else {
                             result.match = false;
                         }
                     } else if (element instanceof Object) {
-                        tester(payload[key][index], element);
+                        current_node[key][index] = {};
+                        tester(payload[key][index], element, current_node[key][index]);
                     } else if (payload[key].includes(element)) {
                         current_node[key][index] = element;
                         result.total += 1;
@@ -34,12 +36,9 @@ const match = (payload, pattern) => {
                         result.match = false;
                     }
                 });
-
             } else if (value instanceof Object) {
-
                 current_node[key] = {};
                 tester(payload[key], value, current_node[key]);
-
             } else {
                 if (payload[key] != value){
                     result.match = false;
@@ -221,16 +220,16 @@ const test_leaf_array_values_regex = () => {
     const payload = {
         "type": "message",
         "items": ['ping ayman', 'hi bassem', 'sup yo']
-    }    
+    }
 
     const result = match(payload, {
         "type": "message",
         "items": [/ping (?<name>\S+)/, /hi (?<another>\S+)/, /sup yo/ ]
-    })     
+    })
 
     return JSON.stringify({
         match: true,
-        total: 2,
+        total: 4,
         matches: {
             "type": "message",
             "items": ['ping ayman', 'hi bassem', 'sup yo']
@@ -239,7 +238,7 @@ const test_leaf_array_values_regex = () => {
             name: 'ayman',
             another: 'bassem'
         }    
-    }) == JSON.stringify(result);    
+    }) == JSON.stringify(result);
 }
 
 const test_nested_objects_in_arrays = () => {
@@ -252,7 +251,7 @@ const test_nested_objects_in_arrays = () => {
                 "bool": true,
                 "items": ['ping ayman', 'hi bassem', 'sup yo']
             },{
-                "number": 1,
+                "integer": 1,
                 "bool": true,
                 "some": "ping mafsoum"
             }    
@@ -268,16 +267,16 @@ const test_nested_objects_in_arrays = () => {
                 "bool": true,
                 "items": [/ping (?<name_other>\S+)/, /hi (?<another>\S+)/, /sup yo/ ]
             },{
-                "number": 1,
+                "integer": 1,
                 "bool": true,
                 "some": /ping (?<who>.*)/
             }    
         ]    
-    })     
+    })
 
     return JSON.stringify({
         match: true,
-        total: 8,
+        total: 10,
         matches: {
             "type": "message",
             "text": "invite (Omar) (o@o.o) (foo) (batata)",
@@ -287,7 +286,7 @@ const test_nested_objects_in_arrays = () => {
                     "bool": true,
                     "items": ['ping ayman', 'hi bassem', 'sup yo']
                 },{
-                    "number": 1,
+                    "integer": 1,
                     "bool": true,
                     "some": "ping mafsoum"
                 }    
@@ -302,7 +301,7 @@ const test_nested_objects_in_arrays = () => {
             another: 'bassem',
             who: "mafsoum"
         }    
-    }) == JSON.stringify(result);    
+    }) == JSON.stringify(result);
 }
 
 module.exports = {
@@ -312,7 +311,7 @@ module.exports = {
         test_nested_objects,
         test_leaf_array_values,
         test_leaf_array_values_multi_type,
-        // test_leaf_array_values_regex,
-        // test_nested_objects_in_arrays,
+        test_leaf_array_values_regex,
+        test_nested_objects_in_arrays,
     }
 }
