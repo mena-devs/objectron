@@ -5,6 +5,8 @@ Summary TBD
 ## Setup
 ```
 npm install
+# Run the tests
+npm test
 ```
 
 ## Usage
