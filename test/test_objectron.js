@@ -270,4 +270,61 @@ suite('Objectron Core Tests', () => {
         assert.isTrue(result.match);
         assert.deepEqual(result, expected);
     });
+
+    test('Match depth 3 regular expressions', () => {
+        const payload = {
+            'type': 'message',
+            'level1': [
+                {
+                    'level2': [
+                        {
+                            'text': 'invite (Smith) (john@example.com) (CompanyX) (Engineer)'
+                        }
+                    ]
+                },
+                {
+                    'text': 'secondary object'
+                }
+            ]
+        }
+
+        const result = match(payload, {
+            'type': 'message',
+            'level1': [
+                {
+                    'level2': [
+                        {
+                            'text': /invite \((?<name>\S+)\) \((?<email>\S+)\) \((?<company>\S+)\) \((?<role>\S+)\)/,
+                        }
+                    ]
+                }
+            ]
+        });
+
+        const expected = {
+            match: true,
+            total: 2,
+            matches: {
+                'type': 'message',
+                'level1': [
+                    {
+                        'level2': [
+                            {
+                                'text': 'invite (Smith) (john@example.com) (CompanyX) (Engineer)'
+                            }
+                        ]
+                    }
+                ]
+            },
+            groups: {
+                name: 'Smith',
+                email: 'john@example.com',
+                company: 'CompanyX',
+                role: 'Engineer'
+            }
+        };
+
+        assert.isTrue(result.match);
+        assert.deepEqual(result, expected);
+    });
 });
