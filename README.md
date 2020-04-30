@@ -1,12 +1,18 @@
 # Objectron
 
-Summary TBD
+## Synopsis
 
-## Setup
+TBD
+
+## Install
+
+**Requires node v10.13.x or above**
+
 ```
-npm install
+$ npm install
+
 # Run the tests
-npm test
+$ npm test
 ```
 
 ## Usage
