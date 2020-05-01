@@ -2,8 +2,12 @@
 
 > Compares a set of match rules contained with an object to determine if the latter conforms to the matching rules
 
-![Node.js CI](https://github.com/mena-devs/objectron/workflows/Node.js%20CI/badge.svg?branch=master)
-![npm version](https://img.shields.io/npm/v/@menadevs/objectron)
+<a href="https://github.com/mena-devs/objectron/actions?query=workflow%3A%22Node.js+CI%22">
+  <img src="https://github.com/mena-devs/objectron/workflows/Node.js%20CI/badge.svg?branch=master" alt="CI Build Status" />
+</a>
+<a href="https://www.npmjs.com/package/@menadevs/objectron">
+  <img src="https://img.shields.io/npm/v/@menadevs/objectron" alt="NPM Version" />
+</a>
 
 This module provides you with the means to define a **tester object** containing a set of **match rules** that will be used against a **payload object**. The `match()` method within the module will return whether the payload object has satisfied all the rules and will return the set of matches.
 
