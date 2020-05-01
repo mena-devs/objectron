@@ -5,7 +5,8 @@
   "main": "index.js",
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^7.1.2"
+    "mocha": "^7.1.2",
+    "standard": "^14.3.3"
   },
   "scripts": {
     "test": "mocha"
