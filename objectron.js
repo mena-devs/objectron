@@ -5,6 +5,11 @@ const match = (payload, pattern, callback) => {
     const tester = (payload, pattern, current_node) => {
 
         Object.entries(pattern).forEach(([key, value]) => {
+            if(!(key in payload)){
+                result.match = false;
+                return;
+            }
+
             if(value instanceof RegExp){
                 const matcher = payload[key].match(value) || [];
                 if (matcher.length > 0) {

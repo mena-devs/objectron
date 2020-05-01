@@ -4,6 +4,30 @@ const suite = require('mocha').suite;
 const test = require('mocha').test;
 
 suite('Objectron Core Tests', () => {
+    test('Match with pattern keys none-existant', () => {
+        const payload = {
+            'type': 'message',
+            'text': 'text',
+        }
+
+        const result = match(payload, {
+            'other': 'stuff',
+            'text': 'text',
+        });
+
+        const expected = {
+            match: false,
+            total: 1,
+            matches: {
+                'text': 'text',
+            },
+            groups: {}
+        };
+
+        assert.isFalse(result.match);
+        assert.deepEqual(result, expected);
+    });
+
     test('Match with primitive types', () => {
         const payload = {
             'type': 'message',
