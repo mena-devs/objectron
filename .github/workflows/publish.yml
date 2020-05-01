@@ -13,6 +13,7 @@ jobs:
         with:
           node-version: 10
           registry-url: https://registry.npmjs.org/
+      - run: sed -i -E 's/"version"\s*:\s*"(v?).+?"\s*(,?)$/"version": "${{ github.event.release.name }}"/' package.json
       - run: npm ci
       - run: npm publish
         env:
