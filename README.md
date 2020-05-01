@@ -1,13 +1,13 @@
 # Objectron
 
-> Compares a set of match rules contained in a tester object with a payload object to determine if the latter conforms to the matching rules.
+> Compares a set of match rules contained with an object to determine if the latter conforms to the matching rules
 
 ![Node.js CI](https://github.com/mena-devs/objectron/workflows/Node.js%20CI/badge.svg?branch=master)
 ![npm version](https://img.shields.io/npm/v/@menadevs/objectron)
 
-This module provides you with the means to define a **tester object** cotaning a set of **match rules** that will be used against a **payload object**. The `match()` method within the module will return whether the payload object has satisfied all the rules and will return the set of matches.
+This module provides you with the means to define a **tester object** containing a set of **match rules** that will be used against a **payload object**. The `match()` method within the module will return whether the payload object has satisfied all the rules and will return the set of matches.
 
-Refer to [Usage example](#usage-example) to see it in action.
+Refer to [Usage examples](#usage-examples) to see it in action.
 
 > GIF demonstrating the plugin -- TBD
 
