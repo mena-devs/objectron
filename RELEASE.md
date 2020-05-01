@@ -24,6 +24,6 @@ Make sure you cover all the steps below for a new version release.
 - [ ] In GitHub actions verify that your pull request passes the `Build & Test` workflow
 - [ ] Get your pull request reviewed by at least 1 other contributor to the project
 - [ ] If all the checks and code reviews are done, `rebase and merge` the develop branch with the `master` branch
-- [ ] In GitHub create a tag and a release from the recently merged pull request
+- [ ] In GitHub create a release from the recently rebased pull request
 - [ ] In GitHub actions verify that the `Publish NPM` job has completed successfully
 - [ ] Verify that everything is correct in the package's npm page: https://www.npmjs.com/package/@menadevs/objectron
