@@ -2,8 +2,8 @@
 
 > Compares a set of match rules contained with an object to determine if the latter conforms to the matching rules
 
-<a href="https://github.com/mena-devs/objectron/actions?query=workflow%3A%22Node.js+CI%22">
-  <img src="https://github.com/mena-devs/objectron/workflows/Node.js%20CI/badge.svg?branch=master" alt="CI Build Status" />
+<a href="https://github.com/mena-devs/objectron/actions?query=workflow%3A%22Build+%26+Test%22+branch%3Amaster">
+  <img src="https://github.com/mena-devs/objectron/workflows/Build%20&%20Test/badge.svg?branch=master" alt="CI Build Status" />
 </a>
 <a href="https://www.npmjs.com/package/@menadevs/objectron">
   <img src="https://img.shields.io/npm/v/@menadevs/objectron" alt="NPM Version" />
