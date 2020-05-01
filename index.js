@@ -41,6 +41,13 @@ const match = (payload, pattern, callback) => {
                         result.match = false;
                     }
                 });
+            } else if (value instanceof Function) {
+                if (!value(payload[key])){
+                    result.match = false;
+                } else {
+                    current_node[key] = payload[key];
+                    result.total += 1;
+                }
             } else if (value instanceof Object) {
                 current_node[key] = {};
                 tester(payload[key], value, current_node[key]);

@@ -28,6 +28,43 @@ suite('Objectron Core Tests', () => {
         assert.deepEqual(result, expected);
     });
 
+    test('Match with function', () => {
+        const payload = {
+            'type': 'message',
+            'text': 'text',
+            'int': 1,
+            'bool': true,
+            'float': 1.1,
+            'items': [1, 1, 1, 1],
+        }
+
+        const result = match(payload, {
+            'type': (val) => val === 'message',
+            'text': (val) => val.length == 4,
+            'int': (val) => val + 1 == 2,
+            'bool': (val) => !!!!!!!!val,  // STAHP!
+            'float': (val) => val - 1.1 == 0,
+            'items': (val) => val.length == 4,
+        });
+
+        const expected = {
+            match: true,
+            total: 6,
+            matches: {
+                'type': 'message',
+                'text': 'text',
+                'int': 1,
+                'bool': true,
+                'float': 1.1,
+                'items': [1, 1, 1, 1],
+            },
+            groups: {}
+        };
+
+        assert.isTrue(result.match);
+        assert.deepEqual(result, expected);
+    });
+
     test('Match with primitive types', () => {
         const payload = {
             'type': 'message',
