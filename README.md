@@ -220,6 +220,44 @@ console.dir(result, {depth: null});
   }
 ```
 
+### 6. Match with closures (Success)
+
+You can use closures for testing
+
+```javascript
+const match = require('@menadevs/objectron');
+
+const payload = {
+  'type': 'message',
+  'text': 'text',
+  'int': 1,
+  'bool': true,
+  'float': 1.1,
+  'items': [1, 1, 1, 1],
+}
+
+const tester = {
+  'type': (val) => val === 'message',
+  'text': (val) => val.length == 4,
+  'int': (val) => val + 1 == 2,
+  'bool': (val) => !!!!!!!!val,
+  'float': (val) => val - 1.1 == 0,
+  'items': (val) => val.length == 4,
+}
+
+const result = match(payload, tester);
+
+console.dir(result, {depth: null});
+
+# Output
+> {
+    match: true,
+    total: 0,
+    matches: { type: {}, text: {}, int: {}, bool: {}, float: {}, items: {} },
+    groups: {}
+}
+```
+
 ## Meta
 
 - [@Link-](https://github.com/Link-)
