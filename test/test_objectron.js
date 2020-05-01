@@ -327,4 +327,20 @@ suite('Objectron Core Tests', () => {
         assert.isTrue(result.match);
         assert.deepEqual(result, expected);
     });
+
+    test('Callback fired on match', () => {
+
+        let called = false;
+
+        const payload = {
+            'type': 'message',
+        }
+
+        const result = match(payload, {
+            'type': 'message',
+        },() => called = true);
+
+        assert.isTrue(called);
+
+    });
 });

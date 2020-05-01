@@ -1,4 +1,4 @@
-const match = (payload, pattern) => {
+const match = (payload, pattern, callback) => {
     let result = { match: true, total: 0, matches: {}, groups: {}};
     let node = result.matches;
 
@@ -51,6 +51,10 @@ const match = (payload, pattern) => {
     }
 
     tester(payload, pattern, node);
+
+    if(callback && result.match){
+        callback(result);
+    }
 
     return result;
 }
