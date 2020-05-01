@@ -1,4 +1,4 @@
-const match = require('../objectron');
+const match = require('../index');
 const assert = require('chai').assert;
 const suite = require('mocha').suite;
 const test = require('mocha').test;
