@@ -13,8 +13,6 @@ This module provides you with the means to define a **tester object** containing
 
 Refer to [Usage examples](#usage-examples) to see it in action.
 
-> GIF demonstrating the plugin -- TBD
-
 ## Installation
 
 Windows, macOS, Linux -- **requires node v10.13.x or above**

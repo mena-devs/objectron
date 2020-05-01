@@ -1,6 +1,6 @@
 {
   "name": "@menadevs/objectron",
-  "version": "0.1.4.1",
+  "version": "0.1.5",
   "description": "Compares a set of match rules contained with an object to determine if the latter conforms to the matching rules",
   "main": "index.js",
   "devDependencies": {
