@@ -274,3 +274,7 @@ console.dir(result, {depth: null});
 ## Contributing
 
 This project does not require a Contributor License Agreement.
+
+### Release Process
+
+Release checklist and process is documented in [Release.md](https://github.com/mena-devs/objectron/blob/master/RELEASE.md)
