@@ -2,7 +2,7 @@ name: npm-publish
 
 on:
   release:
-    types: [created, prereleased]
+    types: [published, created, edited, prereleased]
 
 jobs:
   build:
