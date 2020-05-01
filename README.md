@@ -26,6 +26,13 @@ Run tests (optional)
 $ npm test
 ```
 
+## Use cases
+
+1. You can use this module as a basic JSON schema validator
+2. Can also be used in unit testing for broader assertions
+3. Can be used to extract values from a complex API response (parsing chat bot responses for example)
+4. Can be used for a JSON linter
+
 ## Usage examples
 
 Keep in mind that the tester object can be a subset of the payload. You don't have to write explicit rules for all the properties of the payload object.
