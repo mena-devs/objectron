@@ -1,7 +1,7 @@
 {
   "name": "@menadevs/objectron",
-  "version": "0.1.4",
-  "description": "TBD",
+  "version": "0.1.4.1",
+  "description": "Compares a set of match rules contained with an object to determine if the latter conforms to the matching rules",
   "main": "index.js",
   "devDependencies": {
     "chai": "^4.2.0",
