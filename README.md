@@ -1,6 +1,6 @@
 # Objectron
 
-> Compares a set of match rules contained with an object to determine if the latter conforms to the matching rules
+> Allows you to compare an object to a generic model to test equality and extract matches
 
 <a href="https://github.com/mena-devs/objectron/actions?query=workflow%3A%22Build+%26+Test%22+branch%3Amaster">
   <img src="https://github.com/mena-devs/objectron/workflows/Build%20&%20Test/badge.svg?branch=master" alt="CI Build Status" />
@@ -11,7 +11,13 @@
 
 This module provides you with the means to define a **tester object** containing a set of **match rules** that will be used against a **payload object**. The `match()` method within the module will return whether the payload object has satisfied all the rules and will return the set of matches.
 
-Refer to [Usage examples](#usage-examples) to see it in action.
+## Demo
+
+The best way to really understand this module is to play with some examples. Go through some of our [usage examples](#usage-examples) and test them in our interactive demo page:
+
+<a href="https://mena-devs.github.io/objectron-demo/" style="border:1px solid #616772">
+  <img src="https://mena-devs.github.io/objectron-demo/demo-thumb.png" height="350px" alt="Demo Link" />
+</a>
 
 ## Installation
 
@@ -30,8 +36,10 @@ $ npm test
 
 1. You can use this module as a basic JSON schema validator
 2. Can also be used in unit testing for broader assertions
-3. Can be used to extract values from a complex API response (parsing chat bot responses for example)
-4. Can be used for a JSON linter
+3. Can be used to extract values from a complex API response. We are actively using it in the maintenance of our community slack bot (https://github.com/mena-devs/bosta)
+4. Can be used at the core of a JSON linter
+
+Check our [FAQs](#faqs) for more insights
 
 ## Usage examples
 
@@ -264,6 +272,28 @@ console.dir(result, {depth: null});
     groups: {}
 }
 ```
+
+## FAQs
+
+### 1. What's the difference between Objectron and any other Schema Validator?
+
+Objectron has a simple interface, it's a very small module (~60 LOCs), and most importantly it allows the extraction of the data that matches the rules not merely validating it.
+
+### 2. Has this been used in production?
+
+No, but we're planning to use it.
+
+### 3. Why did you build this?
+
+Why not? :)
+
+### 4. I have a great idea for a new feature!
+
+Fantastic, we'd love to hear more about it. Please [create an issue](https://github.com/mena-devs/objectron/issues) and we will look into it as soon as we're able to.
+
+### 5. I have a question not in this list
+
+Please [create an issue](https://github.com/mena-devs/objectron/issues) and we will look into it as soon as we're able to.
 
 ## Meta
 
