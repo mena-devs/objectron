@@ -1,6 +1,6 @@
 # Objectron
 
-> Allows you to compare an object to a generic model to test equality and extract matches
+> Compare an object to a generic model to test equality and extract matches
 
 <a href="https://github.com/mena-devs/objectron/actions?query=workflow%3A%22Build+%26+Test%22+branch%3Amaster" target="_blank">
   <img src="https://github.com/mena-devs/objectron/workflows/Build%20&%20Test/badge.svg?branch=master" alt="CI Build Status" />
