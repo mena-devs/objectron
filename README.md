@@ -2,10 +2,10 @@
 
 > Allows you to compare an object to a generic model to test equality and extract matches
 
-<a href="https://github.com/mena-devs/objectron/actions?query=workflow%3A%22Build+%26+Test%22+branch%3Amaster">
+<a href="https://github.com/mena-devs/objectron/actions?query=workflow%3A%22Build+%26+Test%22+branch%3Amaster" target="_blank">
   <img src="https://github.com/mena-devs/objectron/workflows/Build%20&%20Test/badge.svg?branch=master" alt="CI Build Status" />
 </a>
-<a href="https://www.npmjs.com/package/@menadevs/objectron">
+<a href="https://www.npmjs.com/package/@menadevs/objectron" target="_blank">
   <img src="https://img.shields.io/npm/v/@menadevs/objectron" alt="NPM Version" />
 </a>
 
@@ -15,7 +15,7 @@ This module provides you with the means to define a **tester object** containing
 
 The best way to really understand this module is to play with some examples. Go through some of our [usage examples](#usage-examples) and test them in our interactive demo page:
 
-<a href="https://mena-devs.github.io/objectron-demo/" style="border:1px solid #616772">
+<a href="https://mena-devs.github.io/objectron-demo/" style="border:1px solid #616772" target="_blank">
   <img src="https://mena-devs.github.io/objectron-demo/demo-thumb.png" height="350px" alt="Demo Link" />
 </a>
 
