@@ -389,6 +389,42 @@ suite('Objectron Core Tests', () => {
     assert.deepEqual(result, expected)
   })
 
+  test('Match number type values against regex pattern', () => {
+    const payload = {
+      age: 15,
+      shoeSize: 44.5,
+      temperature: {
+        type: 'celcius',
+        degree: -20
+      }
+    };
+
+    const result = match(payload, {
+      age: /\d*/,
+      shoeSize: /(\d+\.?\d*|\d*\.?\d+)/,
+      temperature: {
+        degree: /\-\d*/
+      }
+    });
+
+    const expected = {
+      match: true,
+      total: 3,
+      matches: {
+        age: 15,
+        shoeSize: 44.5,
+        temperature: {
+          degree: -20
+        }
+      },
+      groups: {}
+    }
+
+
+    assert.isTrue(result.match);
+    assert.deepEqual(result, expected);
+  });
+
   test('Callback fired on match', () => {
     let called = false
 
@@ -414,7 +450,8 @@ suite('Objectron Core Tests', () => {
         fields: [
           {
             type: 'plain_text',
-            text: 'going home?'
+            text: 'going home?',
+            rating: 5.5
           },
           {
             type: 'markdown',
@@ -432,7 +469,8 @@ suite('Objectron Core Tests', () => {
         fields: [
           {
             type: 'plain_text',
-            text: /(?<verb>\S+) (?<what>.+)?/
+            text: /(?<verb>\S+) (?<what>.+)?/,
+            rating: /(\d+\.?\d*|\d*\.?\d+)/
           }
         ]
       }
@@ -440,13 +478,19 @@ suite('Objectron Core Tests', () => {
 
     const expected = {
       match: true,
-      total: 7,
+      total: 8,
       matches: {
         api: 13,
         ids: [130, 45, 12],
         components: {
           type: 'section',
-          fields: [{ type: 'plain_text', text: 'going home?' }]
+          fields: [
+            { 
+              type: 'plain_text', 
+              text: 'going home?',
+              rating: 5.5
+            }
+          ]
         }
       },
       groups: { verb: 'going', what: 'home?' }
