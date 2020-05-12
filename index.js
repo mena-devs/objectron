@@ -31,7 +31,7 @@ const match = (payload, pattern, callback) => {
        * with the result object
        */
       if (value instanceof RegExp) {
-        const matcher = payload[key].match(value) || []
+        const matcher = value.exec(payload[key]) || []
         if (matcher.length > 0) {
           result.groups = { ...result.groups, ...matcher.groups }
           currentNode[key] = payload[key]
@@ -49,7 +49,7 @@ const match = (payload, pattern, callback) => {
            * Level N depth RegExp handling
            */
           if (element instanceof RegExp) {
-            const matcher = payload[key][index].match(element) || []
+            const matcher = element.exec(payload[key][index]) || []
             if (matcher.length > 0) {
               result.groups = { ...result.groups, ...matcher.groups }
               currentNode[key] = payload[key]
