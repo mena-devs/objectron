@@ -441,6 +441,55 @@ suite('Objectron Core Tests', () => {
     assert.isTrue(called)
   })
 
+  test('Callback used as wildcard', () => {
+    const payload = {
+      request: {
+        status: 200,
+        headers: [
+          {
+            "name": "User-Agent",
+            "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3)"
+          },
+          {
+            "name": "Referer",
+            "value": "https://www.somethingabcxyz.kfc/"
+          }
+        ]
+      }
+    }
+
+    const result = match(payload, {
+      request: {
+        status: 200,
+        headers: (val) => val
+      }
+    });
+
+    const expected = {
+      match: true,
+      total: 2,
+      matches: {
+        request: {
+          status: 200,
+          headers: [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3)"
+            },
+            {
+              "name": "Referer",
+              "value": "https://www.somethingabcxyz.kfc/"
+            }
+          ]
+        }
+      },
+      groups: {}
+    }
+
+    assert.isTrue(result.match)
+    assert.deepEqual(result, expected)
+  })
+
   test('Variation of all the tests above', () => {
     const payload = {
       api: 13,
