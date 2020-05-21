@@ -441,7 +441,7 @@ suite('Objectron Core Tests', () => {
     assert.isTrue(called)
   })
 
-  test('Callback used as wildcard', () => {
+  test('Wildcard matching with a closure', () => {
     const payload = {
       request: {
         status: 200,
@@ -547,5 +547,61 @@ suite('Objectron Core Tests', () => {
 
     assert.isTrue(result.match)
     assert.deepEqual(result, expected)
+  })
+
+  test('Unordered index matching case', () => {
+    const payload = {
+      api: 13,
+      ids: [1, 5, 130, 23, 45, 12],
+      components: {
+        type: 'section',
+        fields: [
+          {
+            type: 'plain_text',
+            text: 'going home?',
+            rating: 5.5
+          },
+          {
+            type: 'markdown',
+            text: '*This must be it*'
+          }
+        ]
+      }
+    }
+
+    const result = match(payload, {
+      api: 13,
+      ids: [12, 130, 45],
+      components: {
+        type: 'section',
+        fields: [
+          {
+            type: 'markdown',
+            text: /.*/
+          }
+        ]
+      }
+    })
+
+    const expected = {
+      match: true,
+      total: 8,
+      matches: {
+        api: 13,
+        ids: [12, 130, 45],
+        components: {
+          type: 'section',
+          fields: [
+            { 
+              type: 'markdown',
+              text: '*This must be it*'
+            }
+          ]
+        }
+      },
+      groups: {}
+    }
+
+    assert.isFalse(result.match)
   })
 })
