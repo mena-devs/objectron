@@ -1,7 +1,4 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Build & Test
+name: Run Tests
 
 on:
   push:
@@ -11,24 +8,27 @@ on:
 
 jobs:
 
-  build:
-    runs-on: ubuntu-latest
+  # Removing the build job for now because it's useless
+  # and a time waster. If there's a need for it, we'll introduce
+  # it later
+  # 
+  # build:
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: npm install and build webpack
-      run: |
-        ls -lha
-        npm ci
-        npm run build --if-present
-    - uses: actions/upload-artifact@master
-      with:
-        name: webpack artifacts
-        path: dist/
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: npm install and build webpack
+  #     run: |
+  #       ls -lha
+  #       npm ci
+  #       npm run build --if-present
+  #   - uses: actions/upload-artifact@master
+  #     with:
+  #       name: webpack artifacts
+  #       path: dist/
 
 
   test:
-    needs: build
     runs-on: ubuntu-latest
 
     strategy:
