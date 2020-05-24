@@ -4,8 +4,8 @@ on:
   push:
     tags:
       - '[0-9].[0-9]+.[0-9]+'
-  # release:
-  #   types: [published]
+  release:
+    types: [published]
 
 jobs:
   publish-npm:
@@ -20,7 +20,6 @@ jobs:
         run: |
           ls -lha
           npm ci
-          echo 'VERSION'${GITHUB_REF##*/}
-          echo 'Publishing a new version'
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
