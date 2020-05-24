@@ -10,18 +10,46 @@ on:
     branches: [ master ]
 
 jobs:
+
   build:
-    name: 'Build & Test'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x]
+
     steps:
     - uses: actions/checkout@v2
+    - name: npm install and build webpack
+      run: |
+        ls -lha
+        npm install
+        npm run build
+    - uses: actions/upload-artifact@master
+      with:
+        name: webpack artifacts
+        path: ${{ GITHUB_WORKSPACE }}
+
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-2016]
+        node-version: [10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@master
+      with:
+        name: webpack artifacts
+        path: public
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/steup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - name: npm install and test
+      run: |
+        ls -lha
+        npm install
+        npm test
+      env:
+        CI: true
