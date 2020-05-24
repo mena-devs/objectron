@@ -1,8 +1,9 @@
 name: Publish to npm
 
 on:
-  create:
-    types: [tag]
+  push:
+    tags:
+      - [0-9].[0-9]+.[0-9]+
   # release:
   #   types: [published]
 
