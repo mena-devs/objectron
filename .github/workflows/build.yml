@@ -24,7 +24,7 @@ jobs:
     - uses: actions/upload-artifact@master
       with:
         name: webpack artifacts
-        path: ./
+        path: dist/
 
 
   test:
@@ -41,7 +41,7 @@ jobs:
     - uses: actions/download-artifact@master
       with:
         name: webpack artifacts
-        path: public
+        path: dist/
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/steup-node@v1
       with:
