@@ -1,0 +1,51 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+
+  # Removing the build job for now because it's useless
+  # and a time waster. If there's a need for it, we'll introduce
+  # it later
+  # 
+  # build:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: npm install and build webpack
+  #     run: |
+  #       ls -lha
+  #       npm ci
+  #       npm run build --if-present
+  #   - uses: actions/upload-artifact@master
+  #     with:
+  #       name: webpack artifacts
+  #       path: dist/
+
+
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-2016]
+        node-version: [10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm install and test
+      run: |
+        ls -lha
+        npm ci
+        npm test
+      env:
+        CI: true
