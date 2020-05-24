@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - '[0-9].[0-9]+.[0-9]+'
-  release:
-    types: [published]
 
 jobs:
   publish-npm:
