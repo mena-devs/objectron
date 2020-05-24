@@ -64,9 +64,9 @@ const match = (payload, pattern, callback) => {
             currentNode[key][index] = {}
 
             payload[key].forEach((payloadItem, payloadIndex) => {
-              if(payloadItem instanceof Object) {
+              if (payloadItem instanceof Object) {
                 const payloadItemMatch = match(payloadItem, element)
-                if(payloadItemMatch.match) {
+                if (payloadItemMatch.match) {
                   tester(payload[key][payloadIndex], element, currentNode[key][index])
                 }
               }
