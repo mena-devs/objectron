@@ -43,7 +43,7 @@ jobs:
         name: webpack artifacts
         path: dist/
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/steup-node@v1
+      uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - name: npm install and test
