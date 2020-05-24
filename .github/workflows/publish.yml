@@ -1,8 +1,10 @@
-name: Publish NPM
+name: Publish to npm
 
 on:
-  release:
-    types: [published]
+  create:
+    types: [tag]
+  # release:
+  #   types: [published]
 
 jobs:
   publish-npm:
@@ -13,7 +15,9 @@ jobs:
         with:
           node-version: 10
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm publish
+        run: |
+          ls -lha
+          npm ci
+          echo 'Publishing a new version'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
