@@ -20,6 +20,7 @@ jobs:
         run: |
           ls -lha
           npm ci
+          echo 'VERSION'${GITHUB_REF##*/}
           echo 'Publishing a new version'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
