@@ -441,6 +441,55 @@ suite('Objectron Core Tests', () => {
     assert.isTrue(called)
   })
 
+  test('Wildcard matching with a closure', () => {
+    const payload = {
+      request: {
+        status: 200,
+        headers: [
+          {
+            "name": "User-Agent",
+            "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3)"
+          },
+          {
+            "name": "Referer",
+            "value": "https://www.somethingabcxyz.kfc/"
+          }
+        ]
+      }
+    }
+
+    const result = match(payload, {
+      request: {
+        status: 200,
+        headers: (val) => val
+      }
+    });
+
+    const expected = {
+      match: true,
+      total: 2,
+      matches: {
+        request: {
+          status: 200,
+          headers: [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3)"
+            },
+            {
+              "name": "Referer",
+              "value": "https://www.somethingabcxyz.kfc/"
+            }
+          ]
+        }
+      },
+      groups: {}
+    }
+
+    assert.isTrue(result.match)
+    assert.deepEqual(result, expected)
+  })
+
   test('Variation of all the tests above', () => {
     const payload = {
       api: 13,
@@ -498,5 +547,61 @@ suite('Objectron Core Tests', () => {
 
     assert.isTrue(result.match)
     assert.deepEqual(result, expected)
+  })
+
+  test('Unordered index matching case', () => {
+    const payload = {
+      api: 13,
+      ids: [1, 5, 130, 23, 45, 12],
+      components: {
+        type: 'section',
+        fields: [
+          {
+            type: 'plain_text',
+            text: 'going home?',
+            rating: 5.5
+          },
+          {
+            type: 'markdown',
+            text: '*This must be it*'
+          }
+        ]
+      }
+    }
+
+    const result = match(payload, {
+      api: 13,
+      ids: [12, 130, 45],
+      components: {
+        type: 'section',
+        fields: [
+          {
+            type: 'markdown',
+            text: /.*/
+          }
+        ]
+      }
+    })
+
+    const expected = {
+      match: true,
+      total: 8,
+      matches: {
+        api: 13,
+        ids: [12, 130, 45],
+        components: {
+          type: 'section',
+          fields: [
+            { 
+              type: 'markdown',
+              text: '*This must be it*'
+            }
+          ]
+        }
+      },
+      groups: {}
+    }
+
+    assert.isFalse(result.match)
   })
 })

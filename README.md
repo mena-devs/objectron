@@ -273,6 +273,61 @@ console.dir(result, {depth: null});
 }
 ```
 
+### 7. Using closures as wildcard (Success)
+
+You can utilize closures to return an entire sub-object or sub-array from specific keys in a payload. This can be useful in cases where you want to return all values under a key without the need for further matching.
+
+```javascript
+const match = require('@menadevs/objectron');
+
+const payload = {
+  request: {
+    status: 200,
+    headers: [
+      {
+        "name": "User-Agent",
+        "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3)"
+      },
+      {
+        "name": "Referer",
+        "value": "https://www.somethingabcxyz.kfc/"
+      }
+    ]
+  }
+}
+
+const tester = {
+  request: {
+    status: 200,
+    headers: (val) => val
+  }
+};
+
+const result = match(payload, tester);
+
+# Output
+> {
+    match: true,
+    total: 2,
+    matches: {
+      request: {
+        status: 200,
+        headers: [
+          {
+            "name": "User-Agent",
+            "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3)"
+          },
+          {
+            "name": "Referer",
+            "value": "https://www.somethingabcxyz.kfc/"
+          }
+        ]
+      }
+    },
+    groups: {}
+}
+```
+
 ## FAQs
 
 ### 1. What's the difference between Objectron and any other Schema Validator?
