@@ -564,7 +564,15 @@ suite('Objectron Core Tests', () => {
           {
             type: 'markdown',
             text: '*This must be it*'
-          }
+          },
+          {
+            type: 'html',
+            text: '<b>Hello world</b>'
+          },
+          {
+            type: 'yaml',
+            text: 'Another text!'
+          },
         ]
       }
     }
@@ -578,14 +586,22 @@ suite('Objectron Core Tests', () => {
           {
             type: 'markdown',
             text: /.*/
-          }
+          },
+          {
+            type: 'html',
+            text: /<b>(.*?)<\/b>/
+          },
+          {
+            type: 'yaml',
+            text: /(?<yamlText>.*)/,
+          },
         ]
       }
     })
 
     const expected = {
       match: true,
-      total: 8,
+      total: 11,
       matches: {
         api: 13,
         ids: [12, 130, 45],
@@ -595,13 +611,24 @@ suite('Objectron Core Tests', () => {
             { 
               type: 'markdown',
               text: '*This must be it*'
-            }
+            },
+            {
+              type: 'html',
+              text: '<b>Hello world</b>'
+            },
+            {
+              type: 'yaml',
+              text: 'Another text!'
+            },
           ]
         }
       },
-      groups: {}
+      groups: {
+        yamlText: 'Another text!'
+      }
     }
 
-    assert.isFalse(result.match)
+    assert.isTrue(result.match)
+    assert.deepEqual(result, expected)
   })
 })
