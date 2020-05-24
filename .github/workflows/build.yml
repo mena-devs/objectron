@@ -24,7 +24,7 @@ jobs:
     - uses: actions/upload-artifact@master
       with:
         name: webpack artifacts
-        path: ${{ GITHUB_WORKSPACE }}
+        path: ./
 
 
   test:
